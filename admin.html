@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>لوحة التحكم</title>
+<style>
+body { background:#111; color:white; font-family:Arial; text-align:center; }
+input { padding:10px; margin:10px; width:200px; }
+button { padding:10px 20px; background:green; color:white; border:none; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<h2>لوحة شحن الجواهر</h2>
+
+<input id="gameName" placeholder="اسم اللعبة"><br>
+<input id="userId" placeholder="المعرف"><br>
+<input id="gemAmount" placeholder="عدد الجواهر"><br>
+<button onclick="charge()">تنفيذ الشحن</button>
+
+<script>
+async function charge() {
+    const game = document.getElementById("gameName").value;
+    const userId = document.getElementById("userId").value;
+    const gems = document.getElementById("gemAmount").value;
+
+    const res = await fetch("http://localhost:3000/api/charge", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ game, userId, gems })
+    });
+
+    const data = await res.json();
+    alert("الرصيد الحالي: " + data.balance);
+}
+</script>
+
+</body>
+</html>
